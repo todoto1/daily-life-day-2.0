@@ -6,7 +6,7 @@
   <title>투두투 라이프 데이</title>
   <style>
     :root {
-      --accent-color: #000cfe; /* 기본 색상 */
+      --accent-color: #000cfe;
     }
 
     * { box-sizing: border-box; }
@@ -64,12 +64,13 @@
       flex-direction: column;
       align-items: flex-end;
       margin-right: 6px;
+      margin-top: 8px; /* 아래로 이동 */
     }
 
     .percentage {
       font-size: 1.6rem;
       font-weight: 800;
-      color: var(--accent-color); /* CSS 변수 사용 */
+      color: var(--accent-color);
       margin: 0;
     }
 
@@ -106,21 +107,21 @@
     }
 
     .dot.passed {
-      background: var(--accent-color); /* CSS 변수 사용 */
+      background: var(--accent-color);
     }
 
-    /* 컬러 선택 버튼 영역 */
+    /* 컬러 선택 버튼 영역 - 오른쪽 상단 */
     .color-picker {
       position: absolute;
-      top: 18px;
-      right: 20px;
+      top: 14px; /* 위쪽으로 더 올림 */
+      right: 18px;
       display: flex;
-      gap: 6px;
+      gap: 4px; /* 간격 축소 */
       z-index: 10;
     }
     .color-option {
-      width: 20px;
-      height: 20px;
+      width: 12px; /* 크기 축소 */
+      height: 12px;
       border-radius: 50%;
       cursor: pointer;
       border: 2px solid transparent;
@@ -131,29 +132,29 @@
       flex-shrink: 0;
     }
     .color-option:hover {
-      transform: scale(1.15);
+      transform: scale(1.2);
     }
     .color-option.active {
       border-color: rgba(0,0,0,0.3);
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.8);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.9);
     }
 
     @media (max-width: 480px) {
       .color-picker {
         top: 12px;
-        right: 12px;
-        gap: 4px;
+        right: 14px;
+        gap: 3px;
       }
       .color-option {
-        width: 18px;
-        height: 18px;
+        width: 11px;
+        height: 11px;
       }
     }
   </style>
 </head>
 <body>
   <div class="widget">
-    <!-- 컬러 선택 버튼 -->
+    <!-- 컬러 선택 버튼 - 오른쪽 상단 -->
     <div class="color-picker">
       <div class="color-option active" data-color="#000cfe" style="background-color: #000cfe;" role="button" tabindex="0" aria-label="파란색"></div>
       <div class="color-option" data-color="#2883de" style="background-color: #2883de;" role="button" tabindex="0" aria-label="하늘색"></div>
@@ -180,7 +181,7 @@
   <script>
     function getKSTDate(now = new Date()) {
       const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-      return new Date(utcMs + 9 * 60 * 60 * 1000); // KST
+      return new Date(utcMs + 9 * 60 * 60 * 1000);
     }
 
     function isLeapYear(year) {
@@ -209,7 +210,7 @@
       const container = document.getElementById('dotsContainer');
       container.innerHTML = "";
 
-      const totalDots = 30; // 6×5
+      const totalDots = 30;
       const passedDots = Math.round(totalDots * (passedDays / totalDays));
 
       for (let i = 0; i < totalDots; i++) {
@@ -231,7 +232,6 @@
       });
     }
 
-    // 컬러 변경 기능
     function changeAccentColor(color) {
       document.documentElement.style.setProperty('--accent-color', color);
       
@@ -247,7 +247,6 @@
       createDots();
       updateDisplay();
 
-      // 컬러 선택 이벤트 리스너
       document.querySelectorAll('.color-option').forEach(button => {
         button.addEventListener('click', () => {
           changeAccentColor(button.dataset.color);
